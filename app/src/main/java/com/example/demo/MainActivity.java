@@ -1,0 +1,125 @@
+package com.example.demo;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class MainActivity extends AppCompatActivity implements MainViewModel.ConsoleDelegate, View.OnClickListener {
+
+    private TextView consoleTextView;
+    private ScrollView consoleScroll;
+
+    private RecyclerView dialogRecyclerView;
+    private DialogAdapter dialogAdapter;
+
+    private Button switchBtn;
+    private Button clearBtn;
+
+    private MainViewModel viewModel;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        PermissionUtil.setActivePermissions(this);
+        viewModel = new MainViewModel(this);
+
+        initView();
+    }
+
+    private void initView() {
+        consoleTextView = findViewById(R.id.tv_console);
+        consoleScroll = findViewById(R.id.sv_console);
+
+        dialogRecyclerView = findViewById(R.id.rv_dialog);
+        dialogAdapter = new DialogAdapter(this, viewModel.getMessages());
+        dialogRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        dialogRecyclerView.setAdapter(dialogAdapter);
+
+        switchBtn = findViewById(R.id.btn_switch);
+        clearBtn = findViewById(R.id.btn_clear);
+        switchBtn.setOnClickListener(this);
+        clearBtn.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_switch:
+                if (viewModel.isListening()) {
+                    viewModel.stopListening();
+                    switchBtn.setBackgroundColor(getResources().getColor(R.color.green));
+                    switchBtn.setText("START LISTENING");
+                } else {
+                    viewModel.startListening();
+                    switchBtn.setBackgroundColor(getResources().getColor(R.color.red));
+                    switchBtn.setText("STOP LISTENING");
+                }
+                break;
+            case R.id.btn_clear:
+                clearDialog();
+                clearLog();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void updateDialog(final int pos) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dialogAdapter.notifyDataSetChanged();
+                dialogRecyclerView.getLayoutManager().scrollToPosition(pos);
+            }
+        });
+
+    }
+
+    @Override
+    public void clearDialog() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                viewModel.clearMessages();
+                dialogAdapter.notifyDataSetChanged();
+                dialogRecyclerView.getLayoutManager().scrollToPosition(0);
+            }
+        });
+
+    }
+
+    @Override
+    public void printLog(final String text) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                consoleTextView.append("\n\n" + text);
+                consoleScroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+    }
+
+    @Override
+    public void clearLog() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                consoleTextView.setText("");
+            }
+        });
+    }
+}
