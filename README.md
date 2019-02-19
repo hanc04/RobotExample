@@ -15,7 +15,10 @@ open this project's **app module build.gradle** file;
 
 1. add your own keystore file **which your dev team use to register your own robot sdk** into signingConfigs
 2. replace the applicationId with your own applicationId **which your dev team use to register your own robot sdk**
+3. import your aar into project
 
 ### Step 3.
 
-Run proj, check if every function is correctly.
+Run project, check if every function is correctly.
+
+You are welcome to submit issues to report bug to us : )
