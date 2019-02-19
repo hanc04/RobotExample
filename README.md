@@ -1,4 +1,4 @@
-# RobotInegrationExample
+# RobotIntegrationExample
 
 A minimal integration example which shows how to develop with RobotSDK
 Before you start your formal development work, you can use this proj to make sure your integration settings is correct.
