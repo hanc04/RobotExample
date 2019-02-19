@@ -1,5 +1,7 @@
 # RobotInegrationExample
+
 A minimal integration example which shows how to develop with RobotSDK
+Before you start your formal development work, you can use this proj to make sure your integration settings is correct.
 
 ## How To Use This Repo:
 
@@ -16,4 +18,4 @@ open this project's **app module build.gradle** file;
 
 ### Step 3.
 
-Run proj, check every function is correctly.
+Run proj, check if every function is correctly.
