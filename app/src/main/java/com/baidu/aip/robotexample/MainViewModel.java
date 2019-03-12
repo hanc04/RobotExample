@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.baidu.aip.robotexample;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import aip.baidu.com.robotsdk.network.model.card.TextCard;
 import aip.baidu.com.robotsdk.network.model.card.UserCard;
 import aip.baidu.com.robotsdk.network.model.card.VideoCard;
 import aip.baidu.com.robotsdk.network.model.card.WeatherInfoCard;
-import aip.baidu.com.robotsdk.speech.AnswerBean;
 import aip.baidu.com.robotsdk.speech.SpeechBean;
 
 public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogListener, IScreenListener, IErrorListener {
@@ -111,11 +110,6 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
     }
 
     @Override
-    public void onNewAnswer(AnswerBean answerBean) {
-        // nothing to do here
-    }
-
-    @Override
     public void onWakeUp(String s) {
 
     }
@@ -132,7 +126,12 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
     }
 
     @Override
-    public void onConfigObtained(int i) {
+    public void onConfigObtained(String languageId) {
+
+    }
+
+    @Override
+    public void onAsrVolume(int volumePercent, int volume) {
 
     }
 
