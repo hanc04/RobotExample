@@ -25,6 +25,8 @@ public class RobotApplication extends Application {
                 .wifiSSID("HUAWEI-7713")
                 .wifiPWD("93121824")
                 .wifiType(SDKConfig.SECURITY_WPA)
+                .asrVolumeNeed(true)
+                .faceAngle(0)
                 .speechServiceType(SDKConfig.SPEECH_TYPE_INTERNAL);
         try {
             RobotSDKEngine.getInstance().initSDK(builder.build());

@@ -1,10 +1,13 @@
 package com.baidu.aip.robotexample;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -25,6 +28,9 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         PermissionUtil.setActivePermissions(this);
         viewModel = new MainViewModel(this);
@@ -45,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
         clearBtn = findViewById(R.id.btn_clear);
         switchBtn.setOnClickListener(this);
         clearBtn.setOnClickListener(this);
-
     }
 
     @Override
@@ -55,11 +60,11 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
                 if (viewModel.isListening()) {
                     viewModel.stopListening();
                     switchBtn.setBackgroundColor(getResources().getColor(R.color.green));
-                    switchBtn.setText("START LISTENING");
+                    switchBtn.setText(getString(R.string.start));
                 } else {
                     viewModel.startListening();
                     switchBtn.setBackgroundColor(getResources().getColor(R.color.red));
-                    switchBtn.setText("STOP LISTENING");
+                    switchBtn.setText(getString(R.string.stop));
                 }
                 break;
             case R.id.btn_clear:
@@ -85,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
                 dialogRecyclerView.getLayoutManager().scrollToPosition(pos);
             }
         });
-
     }
 
     @Override
@@ -106,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                consoleTextView.append("\n\n" + text);
+                consoleTextView.append("\n" + text);
                 consoleScroll.fullScroll(View.FOCUS_DOWN);
             }
         });

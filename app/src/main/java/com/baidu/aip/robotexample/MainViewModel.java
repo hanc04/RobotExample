@@ -7,7 +7,9 @@ import java.util.List;
 import aip.baidu.com.robotsdk.RobotSDKEngine;
 import aip.baidu.com.robotsdk.network.interfaces.IDialogListener;
 import aip.baidu.com.robotsdk.network.interfaces.IErrorListener;
+import aip.baidu.com.robotsdk.network.interfaces.IInstructionListener;
 import aip.baidu.com.robotsdk.network.interfaces.IScreenListener;
+import aip.baidu.com.robotsdk.network.interfaces.ISpeakerControllerListener;
 import aip.baidu.com.robotsdk.network.model.NamespaceGroup;
 import aip.baidu.com.robotsdk.network.model.card.ListCard;
 import aip.baidu.com.robotsdk.network.model.card.NormalCard;
@@ -18,7 +20,8 @@ import aip.baidu.com.robotsdk.network.model.card.VideoCard;
 import aip.baidu.com.robotsdk.network.model.card.WeatherInfoCard;
 import aip.baidu.com.robotsdk.speech.SpeechBean;
 
-public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogListener, IScreenListener, IErrorListener {
+public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogListener,
+        IScreenListener, IErrorListener, IInstructionListener, ISpeakerControllerListener {
 
     private WeakReference<ConsoleDelegate> delegateRef;
     private List<DialogAdapter.Message> messages;
@@ -111,18 +114,17 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
 
     @Override
     public void onWakeUp(String s) {
-
+        delegateRef.get().printLog("onWakeUp: " + s);
     }
 
     @Override
     public void onWakeAngle(int i) {
-
+        delegateRef.get().printLog("onWakeAngle: " + i);
     }
 
     @Override
     public void onError(int i) {
         delegateRef.get().printLog("onError:" + i);
-
     }
 
     @Override
@@ -154,9 +156,7 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
 
     @Override
     public void onHints(List<String> list) {
-        for (String s : list) {
-            delegateRef.get().printLog("onHints:" + s);
-        }
+        delegateRef.get().printLog("onHints, size = " + list.size());
     }
 
     @Override
@@ -171,8 +171,7 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
 
     @Override
     public void onRenderTextCard(TextCard textCard) {
-        delegateRef.get().printLog("onRenderTextCard:" + textCard.getUrl());
-        delegateRef.get().printLog("onRenderTextCard:" + textCard.getContent() + "\n");
+        delegateRef.get().printLog("onRenderTextCard:" + textCard.getUrl() + "\n" + textCard.getContent());
     }
 
     @Override
@@ -182,37 +181,27 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
 
     @Override
     public void onRenderNormalList(ListCard<NormalCard> listCard) {
-        for (NormalCard card : listCard.getList()) {
-            delegateRef.get().printLog("onRenderNormalList:" + card.getTitle());
-            delegateRef.get().printLog("onRenderNormalList:" + card.getContent() + "\n");
-        }
-
+        delegateRef.get().printLog("onRenderNormalList size:" + listCard.getList().size());
     }
 
     @Override
     public void onRenderSimpleImgList(ListCard<SimpleImageCard> listCard) {
-        for (SimpleImageCard card : listCard.getList()) {
-            delegateRef.get().printLog("onRenderSimpleImgList:" + card.getImage());
-            delegateRef.get().printLog("onRenderSimpleImgList:" + card.getUrl());
-        }
+        delegateRef.get().printLog("onRenderSimpleImgList size:" + listCard.getList().size());
     }
 
     @Override
     public void onRenderVideoList(ListCard<VideoCard> listCard) {
-
+        delegateRef.get().printLog("onRenderVideoList, list size: " + listCard.getList().size());
     }
 
     @Override
     public void onRenderPerson(UserCard userCard, byte[] bytes) {
-
+        delegateRef.get().printLog("onRenderPerson: " + userCard.getUid());
     }
 
     @Override
     public void onRenderWeather(WeatherInfoCard weatherInfoCard) {
-        for (WeatherInfoCard.WeatherInfo info : weatherInfoCard.getWeatherInfo()) {
-            delegateRef.get().printLog("onRenderWeather:" + info.getWeather());
-            // developer can log more property here
-        }
+        delegateRef.get().printLog("onRenderWeather, list size: " + weatherInfoCard.getWeatherInfo().size());
     }
 
     @Override
@@ -221,11 +210,33 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
     }
 
     @Override
+    public void onInquireEnergy() {
+        delegateRef.get().printLog("onInquireEnergy");
+
+    }
+
+    @Override
+    public void onShowFeatures() {
+        delegateRef.get().printLog("onShowFeatures");
+    }
+
+    @Override
+    public void onSetMute() {
+        delegateRef.get().printLog("onSetMute");
+    }
+
+    @Override
+    public void onAdjustVolume(String volumeControl, String volumeValue) {
+        delegateRef.get().printLog("onAdjustVolume, volumeControl: " + volumeControl + ", volumeValue: " + volumeValue);
+    }
+
+    @Override
     public boolean onDirectiveReceived(String s, String s1, String s2) {
         return false;
     }
 
     public interface ConsoleDelegate {
+
         void updateDialog(int position);
         void clearDialog();
         void printLog(String text);
