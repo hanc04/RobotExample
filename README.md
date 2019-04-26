@@ -7,18 +7,18 @@
 
 ### Step 1. 
 
-首先联系我们获取 SDK aar文件
+在 http://robot.baidu.com 注册账号，创建应用，下载获 SDK 的 aar文件
 
 
 ### Step 2. 
 
-打开项目**app** module 的 build.gradle文件；
-
-1. 添加开发者自己的keystore文件（即注册Robot SDK时提供的签名文件MD5所对应的keystore）以及相关配置到signingConfigs节点
-2. 将开发者自己的applicationId（即注册Robot SDK时提供的APP包名）替换到build.gradle中
-3. 将获取到的aar文件import到项目中
+将获取到的aar文件import到项目中
 
 
 ### Step 3.
 
-运行项目，检查是否能正确完成语音交互
+将步骤1中创建应用后获取到的clientId和clientSecret填写到RobotApplication的对应变量中，完成RobotSDK的初始化，运行项目。（初始化具体参数请参考官网文档）
+
+## And Then ...?
+
+如果能够正确完成语音交互。则说明开发环境已经配置正确。开发者可以基于本Sample，或者在自己的项目中继续完成机器人项目的开发。
