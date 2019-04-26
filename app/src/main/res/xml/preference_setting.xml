@@ -1,0 +1,39 @@
+<androidx.preference.PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="device_id"
+        app:title="device-id-goes-here"
+        app:summary="本设备序列号"/>
+
+    <PreferenceCategory app:title="音频底板设置">
+        <Preference
+            app:key="wifi_setting"
+            app:title="音频底板 WLAN 设置"
+            app:summary="点击进行音频底板（非主控板）的无线网络设置"/>
+
+        <Preference
+            app:key="volume_setting"
+            app:title="音量控制"
+            app:showSeekBarValue="true"
+            app:summary="点击进行音频底板的输出音量设置"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="地图导航设置">
+        <EditTextPreference
+            app:key="map_setting"
+            app:title="目前的地图的名称"
+            app:summary="地图名称设置"/>
+
+        <EditTextPreference
+            app:key="origin_spot_setting"
+            app:title="目前的原点名称"
+            app:summary="原点名称设置"/>
+
+
+        <Preference
+            app:key="cruise_locations_setting"
+            app:title="设置巡航点集"
+            app:summary="点击设置巡航点集"/>
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

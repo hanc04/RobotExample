@@ -2,14 +2,15 @@ package com.baidu.aip.robotexample;
 
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.DialogViewHolder> {
 
@@ -68,28 +69,4 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.DialogView
         }
     }
 
-    public static class Message {
-        public static final int ROBOT = 0;
-        public static final int USER = 1;
-
-        private int type;
-        private String message;
-
-        public Message(int type, String message) {
-            this.type = type;
-            this.message = message;
-        }
-
-        public int getType() {
-            return type;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
 }

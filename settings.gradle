@@ -1,1 +1,1 @@
-include ':app', ':robotsdk'
+include ':app', ':robotsdk', ':robotsdk-cmolZhengzhou'

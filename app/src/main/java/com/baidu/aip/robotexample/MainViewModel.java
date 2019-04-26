@@ -1,7 +1,8 @@
 package com.baidu.aip.robotexample;
 
+import android.text.TextUtils;
+
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 import aip.baidu.com.robotsdk.RobotSDKEngine;
@@ -24,36 +25,16 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
         IScreenListener, IErrorListener, IInstructionListener, ISpeakerControllerListener {
 
     private WeakReference<ConsoleDelegate> delegateRef;
-    private List<DialogAdapter.Message> messages;
     private boolean isListening;
-    private boolean isUpdate;
-    // 当超时或取消超时限制时设置为true
-    private boolean isOverTime = false;
+    private boolean mIsUpdating;
 
     public MainViewModel(ConsoleDelegate delegate) {
         this.delegateRef = new WeakReference<>(delegate);
         this.isListening = false;
-        messages = new ArrayList<>();
     }
 
     public boolean isListening() {
         return isListening;
-    }
-
-    public List<DialogAdapter.Message> getMessages() {
-        return messages;
-    }
-
-    public int getMessageSize() {
-        return messages.size();
-    }
-
-    public DialogAdapter.Message getLastMessages() {
-        return messages.get(messages.size() - 1);
-    }
-
-    public void clearMessages() {
-        messages.clear();
     }
 
     public void startListening() {
@@ -82,34 +63,16 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
 
     @Override
     public void onNewSpeech(SpeechBean speechBean) {
-        int pos;
-        if (!isUpdate) {
-            pos = getMessageSize() - 1;
-            messages.add(new DialogAdapter.Message(DialogAdapter.Message.USER, speechBean.speech));
-
-            isUpdate = true;
-            if (speechBean.isFinal) {
-                // 不更新
-                isUpdate = false;
-                // 取消超时机制
-                isOverTime = true;
-
-            }
+        String message = speechBean.speech;
+        if (mIsUpdating) {
+            delegateRef.get().updateChat(message);
         } else {
-            if (getLastMessages().getType() == DialogAdapter.Message.ROBOT) {
-                pos = getMessageSize() - 2;
-            } else {
-                pos = getMessageSize() - 1;
-            }
-            messages.get(pos).setMessage(speechBean.speech);
-            if (speechBean.isFinal) {
-                // 不更新
-                isUpdate = false;
-                // 取消超时机制
-                isOverTime = true;
-            }
+            delegateRef.get().insertChat(new Message(Message.USER, message));
+            mIsUpdating = true;
         }
-        delegateRef.get().updateDialog(pos);
+        if (speechBean.isFinal) {
+            mIsUpdating = false;
+        }
     }
 
     @Override
@@ -139,19 +102,20 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
 
     @Override
     public void onVoiceOutput(String s) {
-//        RobotSDKEngine.getInstance().stopSpeaking();
-//        if (TextUtils.isEmpty(s)
-//                || TextUtils.isEmpty(s.trim())
-//                || "null".equals(s.trim())) {
-//            s = "";
-//        }
-//        RobotSDKEngine.getInstance().speak(s);
+        RobotSDKEngine.getInstance().stopSpeaking();
+        if (TextUtils.isEmpty(s)
+                || TextUtils.isEmpty(s.trim())
+                || "null".equals(s.trim())) {
+            s = "";
+        }
+        RobotSDKEngine.getInstance().speak(s);
     }
 
     @Override
     public void onTextOutput(String s) {
-        messages.add(new DialogAdapter.Message(DialogAdapter.Message.ROBOT, s));
-        delegateRef.get().updateDialog(messages.size()-1);
+
+        s = "[" + BuildConfig.ROBOT_NAME + "]:" + s;
+        delegateRef.get().insertChat(new Message(Message.ROBOT, s));
     }
 
     @Override
@@ -237,8 +201,9 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
 
     public interface ConsoleDelegate {
 
-        void updateDialog(int position);
-        void clearDialog();
+        void updateChat(String content);
+        void insertChat(Message message);
+        void clearChat();
         void printLog(String text);
         void clearLog();
     }
