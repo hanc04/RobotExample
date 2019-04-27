@@ -36,21 +36,26 @@ dependencies {
 //    implementation project(path: ':robotsdk')
     implementation(name:'robotsdk-release', ext:'aar')
 
+    /**
+     * official library dependency
+     */
     implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
     implementation "androidx.legacy:legacy-support-v4:$rootProject.supportLibraryVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.supportLibraryVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.cardview:cardview:$rootProject.supportLibraryVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.preference:preference:1.1.0-alpha04"
 
     androidTestImplementation "androidx.test:runner:$rootProject.testRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
 
-    implementation 'com.alibaba:fastjson:1.2.56'
+    /**
+     * third-party library dependency
+     */
+    implementation "com.alibaba:fastjson:$rootProject.fastjsonVersion"
     implementation "com.google.android.exoplayer:exoplayer:$rootProject.exoplayerVersion"
     implementation 'com.elvishew:xlog:1.6.1'
-
     implementation 'com.squareup.okio:okio:1.14.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
 }

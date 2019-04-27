@@ -1,4 +1,4 @@
-package com.baidu.aip.robotexample;
+package com.baidu.aip.robotexample.utils;
 
 import android.Manifest;
 import android.app.Activity;

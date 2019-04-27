@@ -12,7 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.baidu.aip.robotexample.settings.SettingsFragment;
-import com.baidu.aip.robotexample.settings.WifiSettingFragment;
+import com.baidu.aip.robotexample.utils.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,30 +147,46 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
     }
 
     @Override
-    public void updateChat(String content) {
-        int pos = getLastActiveUserMessagePos();
-        if (-1 == pos) { // there's no active user message !
-            return;
-        }
-        mChatList.get(pos).setMessage(content);
-        dialogAdapter.notifyItemChanged(pos);
+    public void updateChat(final String content) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                int pos = getLastActiveUserMessagePos();
+                if (-1 == pos) { // there's no active user message !
+                    return;
+                }
+                mChatList.get(pos).setMessage(content);
+                dialogAdapter.notifyItemChanged(pos);
+
+            }
+        });
 
     }
 
     @Override
-    public void insertChat(Message message) {
-        mChatList.add(message);
-        int pos = mChatList.size() - 1;
-        dialogAdapter.notifyItemInserted(pos);
-        dialogRecyclerView.smoothScrollToPosition(pos);
+    public void insertChat(final Message message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mChatList.add(message);
+                int pos = mChatList.size() - 1;
+                dialogAdapter.notifyItemInserted(pos);
+                dialogRecyclerView.smoothScrollToPosition(pos);
+            }
+        });
     }
 
     @Override
     public void clearChat() {
-        final int size = mChatList.size();
-        mChatList.clear();
-        dialogAdapter.notifyItemRangeRemoved(0, size);
-        dialogRecyclerView.getLayoutManager().scrollToPosition(0);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                final int size = mChatList.size();
+                mChatList.clear();
+                dialogAdapter.notifyItemRangeRemoved(0, size);
+                dialogRecyclerView.getLayoutManager().scrollToPosition(0);
+            }
+        });
     }
 
     @Override
@@ -194,6 +210,14 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (PermissionUtil.MY_PERMISSION_REQUEST_CODE == requestCode) {
+            PermissionUtil.checkPermissionResult(grantResults);
+        }
+    }
+
     private int getLastActiveUserMessagePos() {
         for (int i = mChatList.size() - 1; i > 0; i--) {
             if (mChatList.get(i).getType() == Message.USER) {
@@ -201,13 +225,5 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
             }
         }
         return -1;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (PermissionUtil.MY_PERMISSION_REQUEST_CODE == requestCode) {
-            PermissionUtil.checkPermissionResult(grantResults);
-        }
     }
 }

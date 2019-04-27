@@ -4,6 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.baidu.aip.robotexample.utils.PropertiesUtil;
+
+import java.util.Properties;
+
 import aip.baidu.com.robotsdk.CameraConfig;
 import aip.baidu.com.robotsdk.RobotSDKEngine;
 import aip.baidu.com.robotsdk.SDKConfig;
@@ -20,9 +24,6 @@ public class RobotApplication extends Application {
     public static final CameraConfig CAMERA_CONFIG
             = new CameraConfig(2, AbstractCamera.TYPE_INTERNAL_REAR, "0");
     public static volatile String mActivateErrorMsg = "";
-    private static final String CLIENT_ID = "<Replace-your-id-here>";
-    private static final String CLIENT_SECRET = "<Replace-your-secret-here>";
-
 
     private RobotSDKEngine.DeviceActivationCallback mActivateCallback = new RobotSDKEngine.DeviceActivationCallback() {
         @Override
@@ -47,10 +48,15 @@ public class RobotApplication extends Application {
 
         // SDK配置项
         context = getApplicationContext();
+
+        Properties config = PropertiesUtil.getProperties(this);
+        String clientId = config.getProperty("clientId");
+        String clientSecret = config.getProperty("clientSecret");
+
         SDKConfig.Builder builder = new SDKConfig.Builder();
         builder.context(context)
-                .clientid(CLIENT_ID)
-                .clientSecret(CLIENT_SECRET)
+                .clientid(clientId)
+                .clientSecret(clientSecret)
                 .sdkType(SDKConfig.SDK_FACE_CONVERSATION)
                 .wifiType(SDKConfig.SECURITY_WPA)
                 .speechServiceType(SDKConfig.SPEECH_TYPE_INTERNAL)
