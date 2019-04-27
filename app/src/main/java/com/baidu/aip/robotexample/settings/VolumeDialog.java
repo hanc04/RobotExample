@@ -1,6 +1,5 @@
 package com.baidu.aip.robotexample.settings;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +14,8 @@ import aip.baidu.com.robotsdk.RobotSDKEngine;
 import aip.baidu.com.robotsdk.SDKConfig;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 
-public class VolumeDialog extends DialogFragment implements View.OnClickListener {
+public class VolumeDialog extends BaseDialogFragment implements View.OnClickListener {
 
     private Button addVolumeBtn;
     private Button subVolumeBtn;
@@ -32,20 +29,17 @@ public class VolumeDialog extends DialogFragment implements View.OnClickListener
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_volume_adjust, null);
-        addVolumeBtn = view.findViewById(R.id.volumeAddBtn);
-        addVolumeBtn.setOnClickListener(this);
-        subVolumeBtn = view.findViewById(R.id.volumeSubBtn);
-        subVolumeBtn.setOnClickListener(this);
+    public int getLayout() {
+        return R.layout.dialog_volume_adjust;
+    }
 
-        return new AlertDialog.Builder(getActivity())
-                .setView(view)
-                .setNegativeButton("Cancel", null)
-                .create();
+    @Override
+    protected void setupView(View root) {
+        addVolumeBtn = root.findViewById(R.id.volumeAddBtn);
+        addVolumeBtn.setOnClickListener(this);
+        subVolumeBtn = root.findViewById(R.id.volumeSubBtn);
+        subVolumeBtn.setOnClickListener(this);
     }
 
     @Override

@@ -58,7 +58,6 @@ public class RobotApplication extends Application {
                 .clientid(clientId)
                 .clientSecret(clientSecret)
                 .sdkType(SDKConfig.SDK_FACE_CONVERSATION)
-                .wifiType(SDKConfig.SECURITY_WPA)
                 .speechServiceType(SDKConfig.SPEECH_TYPE_INTERNAL)
                 .asrVolumeNeed(true)
                 .faceAngle(0);

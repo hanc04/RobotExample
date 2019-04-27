@@ -119,6 +119,13 @@ public class WifiSettingFragment extends PreferenceFragmentCompat {
                 for (ScanResult result : mWifiList) {
                     Log.d(TAG, "onReceive: signal level:" + result.level);
                     Preference wifiItemPref = getPreference(result);
+                    wifiItemPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+
+                            return true;
+                        }
+                    });
                     wifiListCate.addPreference(wifiItemPref);
                 }
             }
