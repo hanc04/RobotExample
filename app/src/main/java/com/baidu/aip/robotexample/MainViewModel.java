@@ -1,6 +1,7 @@
 package com.baidu.aip.robotexample;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -23,6 +24,8 @@ import aip.baidu.com.robotsdk.speech.SpeechBean;
 
 public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogListener,
         IScreenListener, IErrorListener, IInstructionListener, ISpeakerControllerListener {
+
+    private static final String TAG = "MainViewModel";
 
     private WeakReference<ConsoleDelegate> delegateRef;
     private boolean isListening;
@@ -63,14 +66,18 @@ public class MainViewModel implements RobotSDKEngine.SpeechCallBack, IDialogList
 
     @Override
     public void onNewSpeech(SpeechBean speechBean) {
+        Log.d(TAG, "onNewSpeech: " + speechBean.speech);
         String message = speechBean.speech;
-        if (mIsUpdating) {
-            delegateRef.get().updateChat(message);
-        } else {
+        if (!mIsUpdating) {
+            Log.d(TAG, "onNewSpeech: insert");
             delegateRef.get().insertChat(new Message(Message.USER, message));
             mIsUpdating = true;
+        } else {
+            Log.d(TAG, "onNewSpeech: update");
+            delegateRef.get().updateChat(message);
         }
         if (speechBean.isFinal) {
+            Log.d(TAG, "onNewSpeech: final status");
             mIsUpdating = false;
         }
     }

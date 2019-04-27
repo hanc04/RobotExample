@@ -160,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
 
             }
         });
-
     }
 
     @Override
@@ -219,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
     }
 
     private int getLastActiveUserMessagePos() {
-        for (int i = mChatList.size() - 1; i > 0; i--) {
+        for (int i = mChatList.size() - 1; i >= 0; i--) {
             if (mChatList.get(i).getType() == Message.USER) {
                 return i;
             }
