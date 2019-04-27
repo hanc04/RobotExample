@@ -2,6 +2,13 @@
 robotsdk/
 robotsdk
 
+# Robot SDK AAR
+app/libs/robotsdk*
+
+# Robot Properties
+app/src/main/assets/*.properties
+
+
 # Keystore
 *.keystore
 
