@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.baidu.aip.robotexample.MainActivity;
 import com.baidu.aip.robotexample.R;
 
 import aip.baidu.com.robotsdk.RobotSDKEngine;

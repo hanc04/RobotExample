@@ -17,12 +17,11 @@ import aip.baidu.com.robotsdk.camera.AbstractCamera;
 public class RobotApplication extends Application {
     private static final String TAG = "RobotApplication";
 
-
     private static Context context;
     public static volatile boolean mActivated = false;
     public static volatile int mActivateErrorCode = 0;
     public static final CameraConfig CAMERA_CONFIG
-            = new CameraConfig(2, AbstractCamera.TYPE_INTERNAL_REAR, "0");
+            = new CameraConfig(1, AbstractCamera.TYPE_INTERNAL_FRONT, "1");
     public static volatile String mActivateErrorMsg = "";
 
     private RobotSDKEngine.DeviceActivationCallback mActivateCallback = new RobotSDKEngine.DeviceActivationCallback() {
@@ -55,12 +54,15 @@ public class RobotApplication extends Application {
 
         SDKConfig.Builder builder = new SDKConfig.Builder();
         builder.context(context)
+                .sdkType(SDKConfig.SDK_FACE_CONVERSATION)
                 .clientid(clientId)
                 .clientSecret(clientSecret)
-                .sdkType(SDKConfig.SDK_FACE_CONVERSATION)
+                .cameraType(AbstractCamera.TYPE_INTERNAL_FRONT)
+                .faceAngle(0)
+                .isFaceAttrDetect(true)
+                .faceRecognizeType(SDKConfig.REC_TYPE_OFFLINE)
                 .speechServiceType(SDKConfig.SPEECH_TYPE_INTERNAL)
-                .asrVolumeNeed(true)
-                .faceAngle(0);
+                .asrVolumeNeed(true);
         try {
             RobotSDKEngine.getInstance().registerDeviceActivationCallback(mActivateCallback);
             RobotSDKEngine.getInstance().initSDK(builder.build());

@@ -1,4 +1,4 @@
-package com.baidu.aip.robotexample;
+package com.baidu.aip.robotexample.main;
 
 
 import android.content.Context;
@@ -11,6 +11,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.baidu.aip.robotexample.R;
 
 public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.DialogViewHolder> {
 

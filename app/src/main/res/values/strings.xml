@@ -4,5 +4,6 @@
     <string name="start">START</string>
     <string name="stop">STOP</string>
     <string name="clear">CLEAR</string>
+    <string name="vis">VIS TESTING</string>
     <string name="settings">SETTINGS</string>
 </resources>

@@ -38,6 +38,7 @@ public class WifiSettingFragment extends PreferenceFragmentCompat {
     private PreferenceCategory wifiListCate;
     private WifiManager mWifiManager;
     private WifiReceiver mReiceiver;
+    private WlanConfigDialog configDialog;
     private List<ScanResult> mWifiList = new ArrayList<>();
 
     @Override
@@ -116,13 +117,18 @@ public class WifiSettingFragment extends PreferenceFragmentCompat {
                 wifiListCate.setTitle("附近的 WLAN 网络");
                 mWifiList = filterScanResult(mWifiManager.getScanResults());
                 wifiListCate.removeAll();
-                for (ScanResult result : mWifiList) {
+                for (final ScanResult result : mWifiList) {
                     Log.d(TAG, "onReceive: signal level:" + result.level);
-                    Preference wifiItemPref = getPreference(result);
+                    final Preference wifiItemPref = getPreference(result);
                     wifiItemPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
-
+                            configDialog = (WlanConfigDialog) getActivity()
+                                    .getSupportFragmentManager().findFragmentByTag("wifi_config");
+                            if (configDialog == null) {
+                                configDialog = WlanConfigDialog.newInstance(wifiItemPref.getTitle().toString());
+                            }
+                            configDialog.show(getActivity().getSupportFragmentManager(), "wifi_config");
                             return true;
                         }
                     });

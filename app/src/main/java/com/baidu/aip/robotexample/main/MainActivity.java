@@ -1,5 +1,6 @@
-package com.baidu.aip.robotexample;
+package com.baidu.aip.robotexample.main;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +12,10 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.baidu.aip.robotexample.R;
 import com.baidu.aip.robotexample.settings.SettingsFragment;
 import com.baidu.aip.robotexample.utils.PermissionUtil;
+import com.baidu.aip.robotexample.vis.VisActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
     private FrameLayout frameLayout;
     private Button switchBtn;
     private Button clearBtn;
+    private Button visBtn;
     private Button settingsBtn;
 
     private TextView serialView;
@@ -67,8 +71,13 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
 
     @Override
     protected void onPause() {
-        super.onPause();
+        if (viewModel.isListening()) {
+            viewModel.stopListening();
+            switchBtn.setBackgroundColor(getResources().getColor(R.color.green));
+            switchBtn.setText(getString(R.string.start));
+        }
         Log.d(TAG, "onPause: ");
+        super.onPause();
     }
 
     @Override
@@ -94,9 +103,11 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
 
         switchBtn = findViewById(R.id.btn_switch);
         clearBtn = findViewById(R.id.btn_clear);
+        visBtn = findViewById(R.id.visBtn);
         settingsBtn = findViewById(R.id.btn_settings);
         switchBtn.setOnClickListener(this);
         clearBtn.setOnClickListener(this);
+        visBtn.setOnClickListener(this);
         settingsBtn.setOnClickListener(this);
     }
 
@@ -117,6 +128,10 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
             case R.id.btn_clear:
                 clearChat();
                 clearLog();
+                break;
+            case R.id.visBtn:
+                Intent intent = new Intent(this, VisActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_settings:
                 SettingsFragment settingsFragment = (SettingsFragment)

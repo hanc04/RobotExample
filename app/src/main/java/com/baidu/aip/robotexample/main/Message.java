@@ -1,4 +1,4 @@
-package com.baidu.aip.robotexample;
+package com.baidu.aip.robotexample.main;
 
 public class Message {
     public static final int ROBOT = 0;

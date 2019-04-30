@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.baidu.aip.robotexample.vis.VisActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7"/>
+
+    <SurfaceView
+        android:id="@+id/cameraSurfaceView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/centerGuide"
+        app:layout_constraintDimensionRatio="H, 3:4" />
+
+    <ScrollView
+        android:id="@+id/terminalScroll"
+        app:layout_constraintHorizontal_bias="0.48"
+        android:background="#000000"
+        app:layout_constraintLeft_toRightOf="@id/cameraSurfaceView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/centerGuide"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+
+        <TextView
+            android:id="@+id/tv_console"
+            android:textColor="#00FF00"
+            android:textSize="@dimen/chat_words_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/faceImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintDimensionRatio="H, 3:4"
+        app:layout_constraintTop_toBottomOf="@id/terminalScroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/centerGuide"
+        android:id="@+id/startFaceLoginBtn"
+        android:text="开始人脸登录"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        app:layout_constraintLeft_toRightOf="@id/startFaceLoginBtn"
+        app:layout_constraintTop_toBottomOf="@id/centerGuide"
+        android:id="@+id/startFaceRecognizeOffline"
+        android:text="开始离线人脸1：N"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        app:layout_constraintLeft_toRightOf="@id/startFaceRecognizeOffline"
+        app:layout_constraintTop_toBottomOf="@id/centerGuide"
+        android:id="@+id/stopRecBtn"
+        android:text="识别结束"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startFaceLoginBtn"
+        android:id="@+id/fullyUpdateBtn"
+        android:text="全量更新人脸库"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        app:layout_constraintLeft_toRightOf="@id/fullyUpdateBtn"
+        app:layout_constraintTop_toBottomOf="@id/startFaceLoginBtn"
+        android:id="@+id/incrementallyUpdateBtn"
+        android:text="增量更新人脸库"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</androidx.constraintlayout.widget.ConstraintLayout>
