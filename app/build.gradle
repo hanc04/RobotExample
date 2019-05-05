@@ -34,7 +34,8 @@ repositories {
 
 dependencies {
 //    implementation project(path: ':robotsdk')
-    implementation(name: 'robotsdk-release', ext: 'aar')
+//    implementation(name: 'robotsdk-release', ext: 'aar')
+    implementation(name: 'robotsdk-debug', ext: 'aar')
 
     /**
      * official library dependency
@@ -46,8 +47,6 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.preference:preference:1.1.0-alpha04"
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     androidTestImplementation "androidx.test:runner:$rootProject.testRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
@@ -59,5 +58,7 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer:$rootProject.exoplayerVersion"
     implementation 'com.elvishew:xlog:1.6.1'
     implementation 'com.squareup.okio:okio:1.14.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
+
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
 }
