@@ -49,9 +49,6 @@
 
     <EditText
         android:id="@+id/pwdEditText"
-        android:inputType="textPassword"
-        android:autofillHints="password"
-        android:hint="输入 WLAN 密码"
         app:layout_constraintTop_toBottomOf="@id/pwdLabel"
         app:layout_constraintLeft_toLeftOf="@id/leftGuide"
         app:layout_constraintRight_toRightOf="@id/rightGuide"

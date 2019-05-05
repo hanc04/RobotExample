@@ -47,7 +47,6 @@ public class VisViewModel extends FaceListener {
 
     public void stop() {
         RobotSDKEngine.getInstance().stopTracking();
-        delegateRef.get().clearLog();
     }
 
     @Override
