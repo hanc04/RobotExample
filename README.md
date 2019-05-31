@@ -1,6 +1,6 @@
-# Robot SDK 集成示例
+# ABC Robot SDK 集成示例
 
-这是一个仅调用了语音交互功能的Robot SDK的Demo应用，用于向开发者展示 RobotSDK 最有限且必要的的集成步骤和最终效果。
+这是一个仅调用了语音交互功能的ABC Robot SDK的Demo应用，用于向开发者展示 RobotSDK 最有限且必要的的集成步骤和最终效果。
 在开发者开始基于自身项目进行正式的开发之前，请先通过这个项目验证自己是否已经正确集成了Robot SDK。
 
 ## How To Use This Repo:
