@@ -81,7 +81,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         view.setBackgroundColor(getResources().getColor(android.R.color.white));
-        devicePref.setTitle(RobotSDKEngine.getInstance().getSerialNumber());
+        devicePref.setTitle(RobotSDKEngine.getInstance().getDeviceId());
         wifiPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {

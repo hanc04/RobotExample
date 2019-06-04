@@ -1,10 +1,13 @@
 package com.baidu.aip.robotexample.vis;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.SurfaceView;
 
 import com.baidu.aip.robotexample.RobotApplication;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 
 import aip.baidu.com.robotsdk.CameraConfig;
@@ -13,8 +16,11 @@ import aip.baidu.com.robotsdk.camera.AbstractCamera;
 import aip.baidu.com.robotsdk.face.FaceInfos;
 import aip.baidu.com.robotsdk.network.model.NamespaceGroup;
 import aip.baidu.com.robotsdk.network.model.card.UserCard;
+import aip.baidu.com.robotsdk.utils.Base64Utils;
 
 public class VisViewModel extends FaceListener {
+
+    private static final String TAG = "VisViewModel";
 
     private CameraConfig cameraConfig;
     private WeakReference<VisDelegate> delegateRef;
@@ -28,6 +34,11 @@ public class VisViewModel extends FaceListener {
 
     public void startFaceLogin(SurfaceView surfaceView) {
         RobotSDKEngine.getInstance().startFaceRecognize(surfaceView, RobotSDKEngine.TASK_FACE_LOGIN, RobotApplication.CAMERA_CONFIG);
+        RobotSDKEngine.getInstance().registerFaceListener(this);
+    }
+
+    public void startfaceRecog(SurfaceView surfaceView) {
+        RobotSDKEngine.getInstance().startFaceRecognize(surfaceView, RobotSDKEngine.TASK_FACE_RECOGNIZE, RobotApplication.CAMERA_CONFIG);
         RobotSDKEngine.getInstance().registerFaceListener(this);
     }
 
@@ -52,7 +63,7 @@ public class VisViewModel extends FaceListener {
     @Override
     public void onNewFace(FaceInfos faceInfos, Bitmap bitmap) {
         delegateRef.get().printLog("onNewFace: " + faceInfos.faceInfo.face_id);
-        delegateRef.get().showImg(bitmap);
+//        delegateRef.get().showImg(bitmap);
     }
 
     @Override
@@ -77,7 +88,21 @@ public class VisViewModel extends FaceListener {
 
     @Override
     public void onRenderPerson(UserCard userCard, byte[] bytes) {
+        delegateRef.get().printLog("onRenderPerson: " + userCard.toString());
+        String str = new String(bytes);
+        Log.d(TAG, "onRenderPerson: " + str);
+//        byte[] data = Base64Utils.decode(userCard.getImage(), Base64Utils.DEFAULT);
+        byte[] data = bytes;
+        String ret = null;
+        try {
+            ret = new String(data, "UTF-8");
+            delegateRef.get().printLog("bytes to String: " + ret);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
+//        Bitmap bm = BitmapFactory.decodeByteArray(data, 0, data.length);
+//        delegateRef.get().showImg(bm);
     }
 
     public interface VisDelegate {

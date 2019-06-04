@@ -28,6 +28,8 @@ public class VisActivity extends AppCompatActivity implements View.OnClickListen
     private ScrollView consoleScroll;
     private ImageView faceImageView;
     private Button startFaceLoginBtn;
+    private Button startFaceRecogBtn;
+
     private Button startFaceRecognizeOfflineBtn;
     private Button stopBtn;
     private Button updateFullyUBtn;
@@ -50,12 +52,14 @@ public class VisActivity extends AppCompatActivity implements View.OnClickListen
         consoleTextView = findViewById(R.id.tv_console);
         consoleScroll = findViewById(R.id.terminalScroll);
         startFaceLoginBtn = findViewById(R.id.startFaceLoginBtn);
+        startFaceRecogBtn = findViewById(R.id.startFaceRecogBtn);
         startFaceRecognizeOfflineBtn = findViewById(R.id.startFaceRecognizeOffline);
         stopBtn = findViewById(R.id.stopRecBtn);
         updateFullyUBtn = findViewById(R.id.fullyUpdateBtn);
         updateIncrementallyBtn = findViewById(R.id.incrementallyUpdateBtn);
 
         startFaceLoginBtn.setOnClickListener(this);
+        startFaceRecogBtn.setOnClickListener(this);
         startFaceRecognizeOfflineBtn.setOnClickListener(this);
         stopBtn.setOnClickListener(this);
         updateFullyUBtn.setOnClickListener(this);
@@ -70,6 +74,9 @@ public class VisActivity extends AppCompatActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.startFaceLoginBtn:
                 viewModel.startFaceLogin(cameraSurfaceView);
+                break;
+            case R.id.startFaceRecogBtn:
+                viewModel.startfaceRecog(cameraSurfaceView);
                 break;
             case R.id.startFaceRecognizeOffline:
                 viewModel.startFaceRecognizeOffline(cameraSurfaceView);

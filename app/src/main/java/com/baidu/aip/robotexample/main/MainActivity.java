@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aip.baidu.com.robotsdk.RobotSDKEngine;
+import aip.baidu.com.robotsdk.SpeechRecListener;
+import aip.baidu.com.robotsdk.speech.IRecogListener;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
         serialView = findViewById(R.id.serialDeviceIdView);
         frameLayout = findViewById(R.id.setting_container);
 
-        String serialNumber = RobotSDKEngine.getInstance().getSerialNumber();
+        String serialNumber = RobotSDKEngine.getInstance().getDeviceId();
         Log.d(TAG, "initView: serialNumber: " + serialNumber);
 
         serialView.setText(serialNumber);

@@ -2,9 +2,13 @@ package com.baidu.aip.robotexample;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.util.Log;
 
 import com.baidu.aip.robotexample.utils.PropertiesUtil;
+import com.baidu.idl.facesdk.model.FaceInfo;
 
 import java.util.Properties;
 
@@ -61,6 +65,8 @@ public class RobotApplication extends Application {
                 .faceAngle(0)
                 .isFaceAttrDetect(true)
                 .faceRecognizeType(SDKConfig.REC_TYPE_OFFLINE)
+                .voiceType("3")
+                .setTtsVoiceSpeed("6")
                 .speechServiceType(SDKConfig.SPEECH_TYPE_INTERNAL)
                 .asrVolumeNeed(true);
         try {
@@ -71,3 +77,5 @@ public class RobotApplication extends Application {
         }
     }
 }
+
+
