@@ -1,8 +1,12 @@
-package com.baidu.aip.robotexample.main;
+package com.baidu.abcrobot.example.main;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -12,21 +16,14 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.baidu.aip.robotexample.R;
-import com.baidu.aip.robotexample.settings.SettingsFragment;
-import com.baidu.aip.robotexample.utils.PermissionUtil;
-import com.baidu.aip.robotexample.vis.VisActivity;
+import com.baidu.abcrobot.example.R;
+import com.baidu.abcrobot.example.utils.PermissionUtil;
+import com.baidu.abcrobot.example.vis.VisActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import aip.baidu.com.robotsdk.RobotSDKEngine;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity implements MainViewModel.ConsoleDelegate, View.OnClickListener {
 
@@ -91,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
         serialView = findViewById(R.id.serialDeviceIdView);
         frameLayout = findViewById(R.id.setting_container);
 
-        String serialNumber = RobotSDKEngine.getInstance().getSerialNumber();
+        String serialNumber = RobotSDKEngine.getInstance().getDeviceId();
         Log.d(TAG, "initView: serialNumber: " + serialNumber);
 
         serialView.setText(serialNumber);
@@ -134,27 +131,27 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Con
                 startActivity(intent);
                 break;
             case R.id.btn_settings:
-                SettingsFragment settingsFragment = (SettingsFragment)
-                        getSupportFragmentManager().findFragmentByTag("settings");
-                if (settingsFragment == null) {
-                    settingsFragment = new SettingsFragment();
-                }
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.setting_container, settingsFragment)
-                        .addToBackStack("settings")
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
-                getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-                    @Override
-                    public void onBackStackChanged() {
-                        int count = getSupportFragmentManager().getBackStackEntryCount();
-                        if (count == 0) {
-                            frameLayout.setVisibility(View.GONE);
-                        }
-                    }
-                });
-                frameLayout.setVisibility(View.VISIBLE);
+//                SettingsFragment settingsFragment = (SettingsFragment)
+//                        getSupportFragmentManager().findFragmentByTag("settings");
+//                if (settingsFragment == null) {
+//                    settingsFragment = new SettingsFragment();
+//                }
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.setting_container, settingsFragment)
+//                        .addToBackStack("settings")
+//                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                        .commit();
+//                getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+//                    @Override
+//                    public void onBackStackChanged() {
+//                        int count = getSupportFragmentManager().getBackStackEntryCount();
+//                        if (count == 0) {
+//                            frameLayout.setVisibility(View.GONE);
+//                        }
+//                    }
+//                });
+//                frameLayout.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;

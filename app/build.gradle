@@ -3,23 +3,20 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.baidu.aip.robot"
+        applicationId "com.baidu.abcrobot.example"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
-            buildConfigField "String", "WAKUP_STRING", "\"小度，小度\""
             buildConfigField "String", "ROBOT_NAME", "\"小度\""
-            signingConfig signingConfigs.debug
         }
-
         release {
-            buildConfigField "String", "WAKUP_STRING", "\"小度，小度\""
-            buildConfigField "String", "ROBOT_NAME", "\"小度\""
+            initWith debug
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -33,31 +30,19 @@ repositories {
 }
 
 dependencies {
-//    implementation project(path: ':robotsdk')
-    implementation(name: 'robotsdk-release', ext: 'aar')
+    // default
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    /**
-     * official library dependency
-     */
-    implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
-    implementation "androidx.legacy:legacy-support-v4:$rootProject.supportLibraryVersion"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.supportLibraryVersion"
-    implementation "androidx.cardview:cardview:$rootProject.supportLibraryVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
-    implementation "androidx.preference:preference:1.1.0-alpha04"
+    // custom
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':robotsdk')
+    implementation "com.android.support:recyclerview-v7:28.0.0"
+    implementation "com.android.support:cardview-v7:28.0.0"
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    androidTestImplementation "androidx.test:runner:$rootProject.testRunnerVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
-    testImplementation "junit:junit:$rootProject.junitVersion"
 
-    /**
-     * third-party library dependency
-     */
-    implementation "com.alibaba:fastjson:$rootProject.fastjsonVersion"
-    implementation "com.google.android.exoplayer:exoplayer:$rootProject.exoplayerVersion"
-    implementation 'com.elvishew:xlog:1.6.1'
-    implementation 'com.squareup.okio:okio:1.14.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
 }

@@ -1,4 +1,4 @@
-package com.baidu.aip.robotexample;
+package com.baidu.abcrobot.example;
 
 import org.junit.Test;
 

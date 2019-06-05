@@ -1,4 +1,4 @@
-package com.baidu.aip.robotexample.vis;
+package com.baidu.abcrobot.example.vis;
 
 import aip.baidu.com.robotsdk.RobotSDKEngine;
 import aip.baidu.com.robotsdk.network.interfaces.IScreenListener;

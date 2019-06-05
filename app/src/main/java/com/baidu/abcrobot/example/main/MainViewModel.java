@@ -1,9 +1,9 @@
-package com.baidu.aip.robotexample.main;
+package com.baidu.abcrobot.example.main;
 
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.baidu.aip.robotexample.BuildConfig;
+import com.baidu.abcrobot.example.BuildConfig;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

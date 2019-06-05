@@ -1,4 +1,4 @@
-package com.baidu.aip.robotexample.utils;
+package com.baidu.abcrobot.example.utils;
 
 import android.content.Context;
 
